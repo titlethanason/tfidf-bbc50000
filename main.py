@@ -31,3 +31,42 @@ def get_query(query_string: str):
 
     print(f'[time_used]\t{time.time()- start} seconds')
     return doc_names
+
+
+# TO MAKE SYSTEM RUN FASTER
+#                                                                   DBBD
+#                                                                 .BBBBBBM:
+#                                                               iBBBBBEDX5:
+#                                                               BBBBBBBBMQK2r
+#                                                             iBBBBBDdqv2IMU.
+#                                                             jBBBBBZqi:: 7B.
+#                                                             iBBBBEBgLB7: Q:
+#                                                             .BBBBQBM Qr :d.
+#                                                               BBBBBBB r: :I
+#                                                               BBBBBBM:Ui::
+#                                                               BBBBBBq.iigB.:
+#                                                               :BBBBBqi. 7:
+#                                                           .iYbBBBBBB5:   Bs.::.
+#                                                       iMRbDQBBRP2uuU7:.iBi.7.:::.
+#                                                       rBBj7Igb5uviirL7i.MB:.i.. :7
+#                                                       BBBMBBBEuLv2L:ri:dSB ::. .i:.
+#                                                       BBBBBBBBBBBb. i7Bi Q LL. i7 .
+#                                                       BBQBBBBBBBB.  LBM YM 77. Y7.:
+#                                                       BBBBBBBBBBBQ  BB:7BU.ju .grJ:
+#                                                     iBBBBBBBBBBBB7 U7iBB7b iQMBjP .
+#                                                     SBBDBBBBBBBBBM   buQZB  BBBB. .
+#                                                     gBB5BB.BBBBBBB:.sq7BLE. QBBi  .
+#                                                     BBMRBBdBBXYLjgMdPJrB. : BBMrLri.
+#                                                     BBBBBBBEJrIZBQDPLi:.... BBQ17i:.
+#                                                     BBBBBBBQBBBBQq2Lr::.:v7BBqi.  .:
+#                                                       BBBB7rBBBBBMdUs7LKBBBBg:   ..:.
+#                                                           PBBBBBEQKjUPDBBBX .7...:.
+#                                                           vBBBBBbMBBBMv.  iBBr  .
+#                                                   Yr71K77u7jbQDiKBBBBBBBBBLq7...r7.
+#                                                 7LMBEbqESJv772qi:LQMqQSEYPZJssrIBBBBPMBi
+#                                               BBBBQjvv7LjuuUu7riL:L.:7::::J5BBBBBBBBQK2Y:.
+#                                             LBB5QMXU5X55uL7:ir7:K7.j7i5BBBBBMZMMDSXS7i:...
+#                                             7BRUIUqbq5j7rr777rrQM rXuRBBBBBBBBgKDMMMMUi:
+#                                               BBbP17uSjL7iir7sEBM .jjBBBBgBBBBBQRbbMBEirr...
+#                                               BBBBbqbSUUqbgQdBj.rL7iBBBdbIBBBBBRDb2XIi:7i:
+#                                                 7KXPgQQMBR7KL::rJ7r7rrrrb1Ji71Lvr:.i7i...
