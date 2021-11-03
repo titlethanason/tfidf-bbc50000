@@ -1,9 +1,29 @@
+import json
 import pickle
 import time
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from Model.TFIDF import TFIDFModel
 
 app = FastAPI()
+templates = Jinja2Templates(directory="templates")
+
+origins = [
+    "http://127.0.0.1:8000",
+    "http://localhost:8000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Getting data
 with open('./tfidf-bbc-50000.pkl', 'rb') as f:
@@ -19,8 +39,13 @@ def read_root():
     return {"status": 1}
 
 
-@app.get("/query/{query_string}")
-def get_query(query_string: str):
+@app.get("/home", response_class=HTMLResponse)
+async def read_item(request: Request):
+    return templates.TemplateResponse("home.html", {"request": request})
+
+
+@app.get("/test/{query_string}", status_code=200)
+def test_query(query_string: str):
     start = time.time()
 
     # query = ["Global warming animal"]
@@ -29,8 +54,22 @@ def get_query(query_string: str):
     doc_ids = [list(data.keys())[i] for i in result]
     doc_names = [data[i]['title'] for i in doc_ids]
 
-    print(f'[time_used]\t{time.time()- start} seconds')
+    print(f'[time_used]\t{time.time() - start} seconds')
     return doc_names
+
+
+@app.get("/query/{query_string}", status_code=200)
+def get_query(query_string: str):
+    start = time.time()
+
+    # query = ["Global warming animal"]
+    query = [query_string]
+    result = tfidf.query_top_n(query)
+    doc_ids = [list(data.keys())[i] for i in result]
+    docs = [data[i] for i in doc_ids]
+    docs_json = jsonable_encoder({"data": docs})
+    print(f'[time_used]\t{time.time() - start} seconds')
+    return JSONResponse(content=docs_json)
 
 
 # TO MAKE SYSTEM RUN FASTER

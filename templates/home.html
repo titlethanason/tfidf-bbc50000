@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>Sentiment Analysis using BERT</title>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+
+<body>
+
+  <!--greeting message-->
+
+  <div class="jumbotron">
+    <h1 align=" center" class="display-4">Assignment #1 Build a text search system</h1>
+    <p align=" center" class="lead">CPE651 Multimedia Information Retrieval</p>
+  </div>
+
+  <!--number of customer-->
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+
+      <div class="card-body">
+
+
+          <label> -- Enter your keywords --</label>
+          <div class="input-group">
+            <input id="review_input" type="text" class="form-control">
+            <div align=" center" class="input-group-append">
+              <button class="btn btn-outline-primary" type="button" onclick="submit()">Search</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+  <!--menu-->
+
+
+
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Result (top 10)</h5>
+        </div>
+        <div id = 'list'>
+        </div>
+      </div>
+      <div class="container">
+
+
+        <!-- Button to Open the Modal -->
+        <button id="show_modal" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="display:none;">
+          Open modal
+        </button>
+
+        <!-- The Modal -->
+        <div class="modal fade" id="myModal" style="position: absolute; top: 50%; left: 50%; margin-right: -50%;transform: translate(-50%, -50%)">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+
+              <!-- Modal body -->
+              <div class="modal-body" style="margin: 3em;">
+                <h2 align=" center" class="display-4">Processing ...</h2>
+              </div>
+
+              <button id="cancel_modal" type="button" data-dismiss="modal" style="display: none" >Close</button>
+
+
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+</body>
+<script>
+
+  let order = {}
+
+  function sendToServer(){
+    let review = document.getElementById('review_input').value
+    let xhr = new XMLHttpRequest();
+    let res_json = null
+    xhr.open("GET", "http://localhost:8000/query/"+review, true);
+    // xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200){
+        res_json = JSON.parse(this.responseText)
+        console.log(res_json['data'])
+        result = document.getElementById('list')
+        result.innerHTML = ""
+        res_json['data'].forEach(function (obj){
+            result.innerHTML += "<div class='card-body'>"+"<h3 style='color:royalblue;'>"+obj['title']+"</h3><p>"+obj['text']+"</p><p>ref: <a href='"+obj['url']+"'>"+obj['url']+"</a></p></div>"
+        })
+        document.getElementById('review_input').value = ""
+        $("#cancel_modal").click();
+      }
+    }
+    let data = JSON.stringify({'data':review});
+    xhr.send(data);
+  }
+
+  function submit(){
+    sendToServer()
+    $("#show_modal").click();
+  }
+</script>
+
+</html>
